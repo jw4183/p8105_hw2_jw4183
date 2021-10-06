@@ -1,0 +1,11 @@
+---
+title: "P8105 HW2"
+author: "Jiacheng Wu"
+date: "10/6/2021"
+output: github_document
+
+
+```{r}
+library(tidyverse)
+```
+
