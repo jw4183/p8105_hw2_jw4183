@@ -54,6 +54,12 @@ preci_data =
   mutate(month = month.name[month]) 
 ```
 
+There are `r nrow(trash_data)` valid observations in the Mr. Trash Wheel data frame. There are `r nrow(preci_data)` rows in the 2018&2019 precipitation data frame.
+The total precipitation in 2018 is `r preci18_data %>% pull(total) %>% sum`. The total precipitation in 2019 is `r preci19_data %>% pull(total) %>% sum`. The median number of sports balls in a dumpster in 2019 is `r trash_data %>% filter(year == 2019) %>% pull(sports_balls) %>% median()`.
+
+## Problem 2
+
+
   
 
 
