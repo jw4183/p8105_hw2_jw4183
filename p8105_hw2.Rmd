@@ -18,7 +18,7 @@ library(readxl)
 
 ```{r, message=FALSE}
 trash_data = 
-  read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", range = "A2:N408") %>% 
+  read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", range = "A2:N535") %>% 
   janitor::clean_names() %>% 
   na.omit() %>% 
   mutate(sports_balls = round(sports_balls))
@@ -28,22 +28,24 @@ Read in precipitation from 2018 and 2019
 
 ```{r, message=FALSE}
 preci18_data = 
-  read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", 
              sheet = "2018 Precipitation", 
              range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   drop_na(total) %>% 
-  mutate(year = 2018)          
+  mutate(year = 2018) %>% 
+  relocate(year, month)
 ```
 
 ```{r, message=FALSE}
 preci19_data = 
-  read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  read_excel("./data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", 
              sheet = "2019 Precipitation", 
              range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   drop_na(total) %>% 
-  mutate(year = 2019)          
+  mutate(year = 2019) %>% 
+  relocate(year, month)
 ```
  
 Combine rows
@@ -52,7 +54,8 @@ Combine rows
 preci_data = 
   bind_rows(preci18_data, preci19_data) %>% 
   janitor::clean_names() %>% 
-  mutate(month = month.name[month]) 
+  mutate(month = month.name[month]) %>% 
+  relocate(year, month)
 ```
 
 There are `r nrow(trash_data)` valid observations in the Mr. Trash Wheel data frame. There are `r nrow(preci_data)` rows in the 2018&2019 precipitation data frame.
@@ -159,7 +162,7 @@ top_male_name_data =
 Produce a scatter plot for male, white non-hispanic children born in 2016
 ```{r, message=FALSE}
 white_malename2016_data = 
-  filter(babyname_data, gender == "male" & ethnicity == "white non hispanic") 
+  filter(babyname_data, gender == "male" & ethnicity == "white non hispanic" & year_of_birth == 2016) 
 ggplot(white_malename2016_data, aes(x = rank, y = count, color = species)) + geom_point(color = "blue")
 ```
 
